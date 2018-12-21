@@ -1,15 +1,21 @@
 var request = require('request');
+var fs = require('fs');
+var zlib = require('zlib');
 
 // Version 1:  Pipe HTML to standard out
-var s = request('http://www.pluralsight.com/');
+// var s = request('http://www.pluralsight.com/');
 
-s.pipe(process.stdout);
+// s.pipe(process.stdout);
 
 // Version 2:  Chain request and pipe together
-//request('http://www.pluralsight.com/').pipe(process.stdout);
+// request('http://www.pluralsight.com/').pipe(process.stdout);
 
 // Version 3:  Pipe HTML to a file instead of standard out
-//request('http://www.pluralsight.com/').pipe(fs.createWriteStream('pluralsight.html'));
+// request('http://romaintestard.surge.sh/').pipe(
+//   fs.createWriteStream('romaintestard.html')
+// );
 
 // Version 4:  Pipe HTML through a gzip stream to a compressed file
-//request('http://www.pluralsight.com/').pipe(zlib.createGzip()).pipe(fs.createWriteStream('pluralsight.html.gz'));
+request('http://www.pluralsight.com/')
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream('pluralsight.html.gz'));
